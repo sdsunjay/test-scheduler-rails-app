@@ -10,7 +10,7 @@ class BidsController < ApplicationController
   end
 
   def index
-      @bids = Bid.joins(:post).where('post_id' => @post).order("created_at")
+      @bids = Bid.where('post_id' => @post).order("created_at")
   end
 
   def new
