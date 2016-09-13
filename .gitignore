@@ -6,9 +6,7 @@
 
 # TODO Comment out these rules if you are OK with secrets being uploaded to the repo
 config/initializers/secret_token.rb
-# We don't want this in the repo
-# Aaron said he's going to fix this, so okay...
-# config/secrets.yml
+config/secrets.yml
 
 current
 releases
@@ -19,6 +17,7 @@ shared
 *.rbc
 capybara-*.html
 .rspec
+/db/development.sqlite3
 /db/*.sqlite3
 /db/*.sqlite3-journal
 ##/public/assets/*
@@ -37,18 +36,14 @@ pickle-email-*.html
 /db/*.sqlite3-journal
 
 # Ignore all logfiles and tempfiles.
-/log/*
+/log/development.log
 !/log/.keep
 /tmp
 
 # Ignore pow environment settings
 .powenv
 
-hitch/.ruby-version
 # Ignore Mac DS_Store files
 .DS_Store
 
 *.cache
-
-# config/database.yml
-
