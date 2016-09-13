@@ -1,5 +1,6 @@
 class Bid < ActiveRecord::Base
     delegate :email, to: :user, prefix: true
+    delegate :name, to: :user, prefix: true
     belongs_to :post
     belongs_to :user
     validates_presence_of :amount
