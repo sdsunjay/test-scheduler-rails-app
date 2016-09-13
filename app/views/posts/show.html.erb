@@ -1,0 +1,61 @@
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="table-responsive">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <td><strong>Title:</strong></td>
+                                <td><%= @post.title %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Posted By:</strong></td>
+                                <td><%= @post.user.email %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Description:</strong></td>
+                                <td><%= @post.description %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Expiration Date:</strong></td>
+                                <td><%= @post.when.strftime("%Y-%m-%d %H:%M") %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Price:</strong></td>
+                                <% if @post.bids.present? %>
+                                    <td><%= @most_recent_bid.amount %> </td>
+                                  <% else %>
+                                    <td><%= @post.price %></td>
+                                <% end %>
+                            </tr>
+                            <tr>
+                                <td><strong>Number of bids:</strong></td>
+                                <td><%= link_to (@post.bids.count), post_bids_path(@post) %></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <% if @post.status == 'incomplete' %>
+                        <h3>Item NOT sold</h3>
+                    <% end %>
+                    <% if @post.status == 'complete' %>
+                        <h3>Sold</h3>
+                    <% end %>
+                    <% if @post.status == 'open' || @post.status == 'pending' %>
+
+                            <%= form_for [@post, @bid] do |f| %>
+                                <%= render 'form_error', resource: f.object %>
+                                <%= f.label(:amount, "Amount:") %>
+                                <%= f.number_field(:amount) %>
+                                <%= f.submit("Submit") %>
+                    <% end %>
+                <% end %>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<% if @post.user_id == current_user.id %>
+    <%= link_to 'Edit', edit_post_path(@post) %> |
+<% end %>
+<%= link_to 'Back', posts_path %>

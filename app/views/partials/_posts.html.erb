@@ -1,0 +1,24 @@
+
+<% if !user_signed_in? %>
+  <div class="jumbotron">
+    <h1>Auctions Everywhere</h1>
+    <p><%= link_to "Sign Up To Bid", new_user_registration_path, class: "btn btn-primary btn-lg" %></p>
+  </div>
+<% end %>
+<% if @posts.exists? %>
+  <div class="row">
+    <% @posts.each do |post| %>
+      <div class="col-sm-6 col-md-3">
+          <%= link_to post.title, post_path(post) %> by <%= post.user.email %></h3>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+<div class="col-xs-12">
+    <article class="ride-box clearfix">
+        <div class="ride-content">
+            <h3>No posts yet</h3>
+        </div>
+    </article>
+</div>
+<% end %>

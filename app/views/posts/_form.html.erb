@@ -1,0 +1,22 @@
+<%= form_for @post, html: { multipart: true } do |f| %>
+<%= render 'form_error', resource: f.object %>
+<div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+</div>
+<div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_area :description %>
+</div>
+<div class="field">
+    <%= f.label :price %><br>
+    <%= f.number_field :price %>
+</div>
+<div class="field">
+    <%= f.label :when %><br>
+    <%= f.datetime_local_field :when %>
+</div>
+<div class="actions">
+    <%= f.submit %>
+</div>
+<% end %>
