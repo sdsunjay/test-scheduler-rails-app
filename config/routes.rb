@@ -1,13 +1,14 @@
 Rails.application.routes.draw do
 
-    devise_for :users, :controllers => { registrations: 'registrations' }
+    devise_for :users, controllers: { registrations: 'registrations' }
+
     resources :posts, only: [:index]
 
     authenticate :user do
         resources :posts, only: [:new, :create, :edit, :update, :destroy, :show] do
             resources :bids, only: [:new, :create, :index]
         end
-        resources :users, only: [:show, :index, :edit, :destroy, :update]
+        resources :users, only: [:show, :index, :edit, :update]
     end
 
 

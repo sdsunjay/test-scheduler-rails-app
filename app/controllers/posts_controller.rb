@@ -7,17 +7,17 @@ class PostsController < ApplicationController
 
   def index
     if params[:query].present?
-        @posts = Post.search(params[:query])
+      @posts = Post.search(params[:query])
     else
-        @posts = Post.all.order('created_at DESC')
-     end
+      @posts = Post.all.order(created_at: :desc)
+    end
   end
 
   def show
-      @post = Post.find(params[:id])
-      @bid = Bid.new(:post=>@post)
-      @most_recent_bid = Bid.joins(:post).where('post_id' => @post).order("created_at").last
-      #@most_recent_bid = @post.merge(Bid.most_recent)
+    @bid = @post.bids.build
+    @most_recent_bid = Bid.joins(:post)
+    .where(post_id: params[:id])
+    .most_recent
   end
 
   def new
@@ -28,23 +28,20 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(post_params)
-    @post.user_id = current_user.id
-
+    @post = current_user.posts.build(post_params.merge(user_id: current_user.id))
     # Save the post
     if @post.save
       flash[:notice] = 'Post Created'
       redirect_to posts_path
     else
-      render 'new'
+      render :new
     end
   end
 
   def update
    @post.update(post_params)
-   @post.check_status 
+   # @post.check_status 
    redirect_to post_path
-
   end
 
   def destroy
@@ -60,11 +57,11 @@ class PostsController < ApplicationController
   private
 
   def set_post
-      @post = Post.find(params[:id])
+    @post = Post.find(params[:id])
   end
 
   def post_params
       params.require(:post).permit(:title, :description, :price, :when_date)
-      end
+  end
 
 end
