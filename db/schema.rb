@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20160915030710) do
     t.integer  "user_id"
     t.integer  "number_of_buyers"
     t.integer  "status",           default: 0
-    t.datetime "when_date",        default: '2016-09-15 02:37:33', null: false
+    t.datetime "when_date",        default: '2016-09-30 06:38:52', null: false
     t.datetime "created_at",                                       null: false
     t.datetime "updated_at",                                       null: false
     t.decimal  "price"
