@@ -14,10 +14,11 @@ class PostsController < ApplicationController
   end
 
   def show
-    @bid = @post.bids.build
-    @most_recent_bid = Bid.joins(:post)
-    .where(post_id: params[:id])
-    .most_recent
+     @bid = Bid.new(:post=>@post)
+     @most_recent_bid = Bid.joins(:post).where('post_id' => @post).order("created_at").last  
+    # Shit don't work
+    # @bid = @post.bids.build
+    # @most_recent_bid = Bid.joins(:post).where(post_id: params[:id]).most_recent
   end
 
   def new
