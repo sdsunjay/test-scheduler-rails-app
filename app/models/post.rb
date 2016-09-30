@@ -24,11 +24,11 @@ class Post < ActiveRecord::Base
     }
 
     def check_status
-        if self.when_date < DateTime.now && bids.any? && self.status != 'complete'
+        if self.status == 'pending' && self.when_date < DateTime.now
             # More than 0 bids and the auction has ended
             self.status = 'complete'
             self.save
-        elsif self.when_date < DateTime.now && self.status != 'incomplete' 
+        elsif self.status == 'open' && self.when_date < DateTime.now  
             # 0 bids and the auction has ended
             self.status = 'incomplete'
             self.save
