@@ -10,7 +10,7 @@ class BidsController < ApplicationController
   end
 
   def index
-      @bids = Bid.where('post_id' => @post).order("created_at")
+      @bids = Bid.where(post_id: @post.id).order(:created_at)
   end
 
   def new
@@ -20,11 +20,10 @@ class BidsController < ApplicationController
   def edit
   end
 
-  def create
-    if current_user.id != @post.user_id
-        if @post.is_auction_complete == false
-            @bid = @post.bids.build(bid_params)
-            @bid.user = current_user
+  def create 
+      if current_user.id != @post.user_id
+        if @post.open? || @post.pending?
+            @bid = @post.bids.build(bid_params.merge(user_id: current_user.id))
             # Save the bid
             if @bid.save
                 flash[:notice] = 'Bid Placed'
