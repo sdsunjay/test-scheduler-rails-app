@@ -22,21 +22,17 @@ class BidsController < ApplicationController
 
   def create
     if current_user.id != @post.user_id
-        if @post.status == 'open' || @post.status == 'pending'
+        if @post.is_auction_complete == false
             @bid = @post.bids.build(bid_params)
             @bid.user = current_user
             # Save the bid
             if @bid.save
                 flash[:notice] = 'Bid Placed'
                 if @post.status == 'open'
-                    @post.status == 'pending'
+                    @post.status = 'pending'
+                    @post.save
                 end
 
-                if @post.save
-                    redirect_to @post
-                else
-                    flash[:alert] = 'Post status NOT changed'
-                end
             else
               flash[:alert] = 'Bid NOT Placed'
           end
@@ -46,8 +42,7 @@ class BidsController < ApplicationController
     else
         flash[:alert] = 'You cannot bid on your own auction'
     end
-
-
+    redirect_to @post
   end
 
   private

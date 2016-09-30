@@ -42,7 +42,7 @@ class PostsController < ApplicationController
 
   def update
    @post.update(post_params)
-   # @post.update_attributes(params[:post])
+   @post.check_status 
    redirect_to post_path
 
   end
@@ -64,7 +64,7 @@ class PostsController < ApplicationController
   end
 
   def post_params
-      params.require(:post).permit(:title, :description, :price, :when)
+      params.require(:post).permit(:title, :description, :price, :when_date)
       end
 
 end

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160812211425) do
+ActiveRecord::Schema.define(version: 20160915030710) do
 
   create_table "bids", force: :cascade do |t|
     t.integer  "user_id"
@@ -27,9 +27,9 @@ ActiveRecord::Schema.define(version: 20160812211425) do
     t.integer  "user_id"
     t.integer  "number_of_buyers"
     t.integer  "status",           default: 0
-    t.date     "when"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "when_date",        default: '2016-09-15 02:37:33', null: false
+    t.datetime "created_at",                                       null: false
+    t.datetime "updated_at",                                       null: false
     t.decimal  "price"
   end
 

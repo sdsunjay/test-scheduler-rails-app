@@ -19,7 +19,11 @@
                             </tr>
                             <tr>
                                 <td><strong>Expiration Date:</strong></td>
-                                <td><%= @post.when.strftime("%Y-%m-%d %H:%M") %></td>
+                                <td><%= @post.when_date.strftime("%Y-%m-%d %H:%M") %></td>
+                            </tr>
+                            <tr>
+                                <td><strong>Status:</strong></td>
+                                <td><%= @post.status %></td>
                             </tr>
                             <tr>
                                 <td><strong>Price:</strong></td>
@@ -57,5 +61,6 @@
 </div>
 <% if @post.user_id == current_user.id %>
     <%= link_to 'Edit', edit_post_path(@post) %> |
+    <%= link_to 'Delete', post_path(@post), class: 'btn btn-danger', method: :delete, data: { confirm: "Are you sure?" } %>
 <% end %>
 <%= link_to 'Back', posts_path %>

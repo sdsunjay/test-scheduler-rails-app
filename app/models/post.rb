@@ -5,7 +5,7 @@ class Post < ActiveRecord::Base
     validates :price, presence: {message: 'The item must have a starting price'}
     validates_numericality_of :price 
     validates_uniqueness_of :title
-    validates :when, presence: {message: 'End date and time cannot be blank'}
+    validates :when_date, presence: {message: 'End date and time cannot be blank'}
 
     has_many :bids
     has_many :users, through: :bids
@@ -23,15 +23,19 @@ class Post < ActiveRecord::Base
         incomplete: 3
     }
 
-    def check_start_date
-        if self.when < DateTime.now && bids.any?
+    def check_status
+        if self.when_date < DateTime.now && bids.any? && self.status != 'complete'
             # More than 0 bids and the auction has ended
             self.status = 'complete'
             self.save
-        elsif self.when < DateTime.now 
+        elsif self.when_date < DateTime.now && self.status != 'incomplete' 
             # 0 bids and the auction has ended
             self.status = 'incomplete'
             self.save
         end
+    end
+
+    def is_auction_complete
+        return self.status == 'complete'
     end
 end
