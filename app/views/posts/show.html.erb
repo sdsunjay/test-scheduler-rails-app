@@ -11,7 +11,7 @@
                             </tr>
                             <tr>
                                 <td><strong>Posted By:</strong></td>
-                                <td><%= @post.user.email %></td>
+                                <td><%= link_to (@post.user.name), user_path(@post.user) %></td>
                             </tr>
                             <tr>
                                 <td><strong>Description:</strong></td>

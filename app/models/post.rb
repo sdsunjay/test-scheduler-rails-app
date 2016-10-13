@@ -1,5 +1,7 @@
 class Post < ActiveRecord::Base
     belongs_to :user    
+    has_many :bids
+    
     validates :user_id, presence: true
     validates :title, presence: {message: 'The auction must have a title'}
     validates :price, presence: {message: 'The item must have a starting price'}
@@ -7,10 +9,11 @@ class Post < ActiveRecord::Base
     validates_uniqueness_of :title
     validates :when_date, presence: {message: 'End date and time cannot be blank'}
 
-    has_many :bids
-    has_many :users, through: :bids
-
-
+    def check_highest_bid
+        highest_bid = self.bids.order("amount DESC").first.amount rescue 0
+        self.price = highest_bid
+        save
+    end
 
     enum status: {
         # The post is available for bids
