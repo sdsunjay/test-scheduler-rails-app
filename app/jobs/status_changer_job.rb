@@ -1,7 +1,7 @@
 class StatusChangerJob < ActiveJob::Base
   queue_as :default
 
-  def perform(post)
-    post.check_status
+  def perform()
+      Post.find_each(&:update_status)
   end
 end

@@ -26,15 +26,13 @@ class Post < ActiveRecord::Base
         incomplete: 3
     }
 
-    def check_status
-        if self.status == 'pending' && self.when_date < DateTime.now
+    def update_status
+        if pending? && when_date < DateTime.now
             # More than 0 bids and the auction has ended
-            self.status = 'complete'
-            self.save
-        elsif self.status == 'open' && self.when_date < DateTime.now  
+            self.complete!
+        elsif open? && when_date < DateTime.now  
             # 0 bids and the auction has ended
-            self.status = 'incomplete'
-            self.save
+            self.incomplete!
         end
     end
 
